@@ -1,0 +1,22 @@
+{
+   "background": {
+      "page": "background.html"
+   },
+   "browser_action": {
+      "default_icon": "icon16.png",
+      "default_popup": "popup.html",
+      "default_title": "Spider a website"
+   },
+   "description": "Update of 'Site Spider' to manifest 2",
+   "icons": {
+      "128": "icon128.png",
+      "16": "icon16.png",
+      "48": "icon48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCK48x4FzpZZi68IT4iYgpeSsilcvrcSizhpSMzDXV/iNbptAkZoHvTIjFxuIvO8NITrPc+vb8fB/FixzpK4BY0gg+0zzWhHWOpjBc2ulzMkYrRXd4VVydPjfQtWNYV2aYEaWlnSY6YCijSZI+Jun5VtpSNtlpxbacJkir0mUSTUQIDAQAB",
+   "manifest_version": 2,
+   "name": "Site Spider, Mark II",
+   "permissions": [ "tabs", "http://*/*", "https://*/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.1"
+}

@@ -1,0 +1,140 @@
+<html>
+<head>
+    <title>Site Spider Results</title>
+
+    <style type="text/css">
+        body {
+            font-family: sans-serif
+        }
+
+        #resultsTable {
+            border-spacing: 1px;
+            margin: 15px;
+            width: 99%;
+            table-layout: fixed;
+        }
+
+        #resultsTable th {
+            text-align: left;
+            background-color: #d0d0d0;
+        }
+
+        #resultsTable td, #resultsTable th {
+            font-size: 9pt;
+            padding: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #resultsTable td.x0 {
+            color: #c00;
+        }
+
+        #resultsTable tr:hover {
+            background: #ffa;
+        }
+
+        #startingOn, #restrictTo {
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<img src="icon128.png" align="right"/>
+<h1>Site Spider Results</h1>
+
+<div id="app">
+    <div v-for="job in jobs">
+        <form>
+            <input v-if="job.started" type="button" @click="pauseSpider(job.id)" value="Pause"/>
+            <input v-if="job.paused" type="button" @click="resumeSpider(job.id)" value="Resume"/>
+            <input type="button" @click="stopSpider(job.id)" value="Stop"/>
+            <input type="button" @click="download(job.id)" value="Download"/>
+            <input type="button" @click="remove(job.id)" value="Remove"/>
+            <input type="button" @click="job.show = true" value="Show"/>
+        </form>
+
+        <table>
+            <tr>
+                <td>Starting on:</td>
+                <td id="startingOn">{{ job.startPage }}</td>
+            </tr>
+
+            <tr>
+                <td>Restrict to:</td>
+                <td id="restrictTo">{{ job.allowedText }}</td>
+            </tr>
+
+            <tr>
+                <td>Queue:</td>
+                <td>{{ job.queueCount }}</td>
+            </tr>
+
+            <tr>
+                <td>Done:</td>
+                <td>{{ job.doneCount }}</td>
+            </tr>
+
+            <tr>
+                <td>Error:</td>
+                <td>{{ job.errorCount }}</td>
+            </tr>
+
+            <tr>
+                <td>Status:</td>
+                <td id="status">{{ job.status }}</td>
+            </tr>
+        </table>
+
+
+        <div v-if='job.started && job.status!="Complete"' style="height:400px;width:100%"
+             v-bind:id="'chart_' + job.id"></div>
+
+
+        <table id="resultsTable" v-if='job.show'>
+            <colgroup>
+                <col style="width: 32%">
+                <col style="width: 32%">
+                <col style="width: 32%">
+            </colgroup>
+            <thead>
+            <tr>
+                <th class="nocase">Request</th>
+                <th class="nocase">Status</th>
+                <th class="nocase">Referrer</th>
+            </tr>
+            </thead>
+            <tbody id="resultbody">
+            <tr v-for="item in job.queue">
+                <td><a v-bind:href="item.url" target="spiderpage" v-bind:title="item.url">{{item.url}} </a></td>
+                <td><span></span></td>
+                <td><span v-bind:title="item.referrer"> {{item.referrer}} </span></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <table style="display:none" id="verboseTable">
+            <colgroup>
+                <col style="width: 48%">
+                <col style="width: 48%">
+            </colgroup>
+            <thead>
+            <tr>
+                <th class="nocase">Referrer</th>
+                <th class="nocase">Found</th>
+            </tr>
+            </thead>
+            <tbody id="verbosebody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript" src="echarts-all.js" charset="utf-8"></script>
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/javascript" src="resultsOnload.js"></script>
+
+</body>
+</html>
